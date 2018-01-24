@@ -96,8 +96,13 @@ variable "termination_protection" {
 }
 
 variable "cloudwatch_logs_enabled" {
-  description = "Bool(optional, false): WHether to enable Cloudwatch Logs"
+  description = "Bool(optional, false): Whether to enable Cloudwatch Logs"
   default     = false
+}
+
+variable "r53_domain" {
+  description = "String(optional, \"\"): R53 master name to use for setting neo4j DNS records. No records are created when not set"
+  default     = ""
 }
 
 variable "tags" {

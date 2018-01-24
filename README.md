@@ -27,6 +27,7 @@ Terraform module to setup all resources needed for setting up a Neo4j cluster (e
 * [`transaction_port`]: Int(optional, 6000): Causal clustering transaction port
 * [`termination_protection`]: Bool(optional, true): Whether to enable termination protection on the Ne04j nodes
 * [`cloudwatch_logs_enabled`]: Bool(optional, false): WHether to enable Cloudwatch Logs
+* [`r53_domain`]: String(optional, \"\"): R53 master name to use for setting neo4j DNS records. No records are created when not set
 * [`tags`]: Map(optional, {}): Optional tags
 
 ### Outputs
