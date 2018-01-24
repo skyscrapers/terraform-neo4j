@@ -82,7 +82,9 @@ EOF
 aws --region $(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone | sed 's/[a-z]$//') ec2 wait volume-in-use --filters Name=attachment.instance-id,Values=$(curl -s http://169.254.169.254/latest/meta-data/instance-id) Name=attachment.device,Values=/dev/xvdf
 
 # Create FS
-mkfs.ext4 /dev/xvdf -L NEO4J
+if $(blkid -p /dev/xvdf &>/dev/null); then
+  mkfs.ext4 /dev/xvdf -L NEO4J
+fi
 
 # Make sure the mount path exists
 mkdir -p ${var.volume_path}
