@@ -27,7 +27,7 @@ variable "key_name" {
 
 variable "core_count" {
   description = "Int(optional, 1): Size of the Core Neo4j cluster"
-  default     = 1
+  default     = 3
 }
 
 variable "core_type" {

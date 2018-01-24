@@ -12,7 +12,7 @@ Terraform module to setup all resources needed for setting up a Neo4j cluster (e
 * [`name`]: String(optional, \"neo4j\"): Name to use for the Neo4j cluster
 * [`ami`]: String(optional, \"\"): AMI to be used for the Neo4j nodes
 * [`key_name`]: String(required): ID of the SSH key to use for the Neo4j nodes
-* [`core_count`]: Int(optional, 1): Size of the Core Neo4j cluster
+* [`core_count`]: Int(optional, 3): Size of the Core Neo4j cluster
 * [`core_type`]: String(optional, t2.small): Instance type to use for the Core instances
 * [`volume_type`]: String(optional, \"gp2\"): EBS volume type to use
 * [`volume_size`]: Int(required): EBS volume size (in GB) to use
