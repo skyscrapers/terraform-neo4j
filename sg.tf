@@ -1,5 +1,5 @@
 resource "aws_security_group" "sg" {
-  name        = "${var.project}-${var.environment}-${var.name}"
+  name_prefix = "${var.project}-${var.environment}-${var.name}"
   description = "Security group for the ${var.project} Neo4j cluster"
   vpc_id      = "${var.vpc_id}"
 
