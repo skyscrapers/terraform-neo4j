@@ -39,7 +39,7 @@ resource "aws_volume_attachment" "core_attach" {
 }
 
 module "puppet_userdata" {
-  source              = "github.com/skyscrapers/terraform-skyscrapers//puppet-userdata?ref=1.0.1"
+  source              = "github.com/skyscrapers/terraform-skyscrapers//puppet-userdata?ref=1.0.2"
   amount_of_instances = "${var.core_count}"
   customer            = "${var.customer == "" ? var.project : format("%s-%s", var.customer, var.project)}"
   environment         = "${var.environment}"
