@@ -75,6 +75,18 @@ variable "security_group_ids" {
   default     = []
 }
 
+variable "client_sg_ids" {
+  description = "List(optional, []): Security group IDs for client access to the cluster, via Bolt and/or HTTP(S)"
+  type        = "list"
+  default     = []
+}
+
+variable "backup_sg_ids" {
+  description = "List(optional, []): Security group IDs for the backup client(s)"
+  type        = "list"
+  default     = []
+}
+
 variable "discovery_port" {
   description = "Int(optional, 5000): Causal clustering discovery port"
   default     = 5000
@@ -88,6 +100,46 @@ variable "raft_port" {
 variable "transaction_port" {
   description = "Int(optional, 6000): Causal clustering transaction port"
   default     = 6000
+}
+
+variable "bolt_enabled" {
+  description = "Int(optional, true): Whether to allow client connections via Bolt"
+  default     = true
+}
+
+variable "bolt_port" {
+  description = "Int(optional, 9000): Bolt client port"
+  default     = 9000
+}
+
+variable "http_enabled" {
+  description = "Int(optional, true): Whether to allow client connections via HTTP"
+  default     = true
+}
+
+variable "http_port" {
+  description = "Int(optional, 7474): HTTP client port"
+  default     = 7474
+}
+
+variable "https_enabled" {
+  description = "Int(optional, false): Whether to allow client connections via HTTPS"
+  default     = false
+}
+
+variable "https_port" {
+  description = "Int(optional, 7473): HTTPS client port"
+  default     = 7473
+}
+
+variable "backup_enabled" {
+  description = "Int(optional, false): Whether to allow client connections for taking backups"
+  default     = false
+}
+
+variable "backup_port" {
+  description = "Int(optional, 6362): Backup client port"
+  default     = 6362
 }
 
 variable "termination_protection" {

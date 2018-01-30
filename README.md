@@ -22,9 +22,19 @@ Terraform module to setup all resources needed for setting up a Neo4j cluster (e
 * [`vpc_id`]: String(required): VPC ID where to deploy the cluster
 * [`subnet_ids`]: List(required): Subnet IDs where to deploy the cluster
 * [`security_group_ids`]: List(optional, []): Extra security group IDs to attach to the cluster. Note: a default SG is already created and exposed via outputs
+* [`client_sg_ids`]: List(optional, []): Security group IDs for client access to the cluster, via Bolt and/or HTTP(S)
+* [`backup_sg_ids`]: List(optional, []): Security group IDs for the backup client(s)
 * [`discovery_port`]: Int(optional, 5000): Causal clustering discovery port
 * [`raft_port`]: Int(optional, 7000): Causal clustering raft port
 * [`transaction_port`]: Int(optional, 6000): Causal clustering transaction port
+* [`bolt_enabled`]: Bool(optional, true): Whether to allow client connections via Bolt
+* [`bolt_port`]: Int(optional, 9000): Bolt client port
+* [`http_enabled`]: Bool(optional, true): Whether to allow client connections via HTTP
+* [`http_port`]: Int(optional, 7474): HTTP client port
+* [`https_enabled`]: Bool(optional, false): Whether to allow client connections via HTTPS
+* [`https_port`]: Int(optional, 7473): HTTPS client port
+* [`backup_enabled`]: Bool(optional, false): Whether to allow client connections for taking backups
+* [`backup_port`]: Int(optional, 6362): Backup client port
 * [`termination_protection`]: Bool(optional, true): Whether to enable termination protection on the Ne04j nodes
 * [`cloudwatch_logs_enabled`]: Bool(optional, false): WHether to enable Cloudwatch Logs
 * [`r53_domain`]: String(optional, \"\"): R53 master name to use for setting neo4j DNS records. No records are created when not set
@@ -49,52 +59,20 @@ module "neo4j" {
   vpc_id             = "${module.vpc.vpc_id}"
   subnet_ids         = "${module.vpc.private_db_subnets}"
   security_group_ids = ["${module.sg_all.sg_id}"]
-}
-```
-
-#### Allowing access to the cluster
-
-```terraform
-resource "aws_security_group_rule" "ingress_neo4j_bolt" {
-  security_group_id        = "${module.neo4j.sg_id}"
-  type                     = "ingress"
-  protocol                 = "tcp"
-  from_port                = "7687"
-  from_port                = "7687"
-  source_security_group_id = "neo4j_clients_sg"
-}
-
-resource "aws_security_group_rule" "ingress_neo4j_http" {
-  security_group_id        = "${module.neo4j.sg_id}"
-  type                     = "ingress"
-  protocol                 = "tcp"
-  from_port                = "7474"
-  from_port                = "7474"
-  source_security_group_id = "neo4j_clients_sg"
-}
-
-resource "aws_security_group_rule" "ingress_neo4j_https" {
-  security_group_id        = "${module.neo4j.sg_id}"
-  type                     = "ingress"
-  protocol                 = "tcp"
-  from_port                = "7473"
-  from_port                = "7473"
-  source_security_group_id = "neo4j_clients_sg"
-}
-
-resource "aws_security_group_rule" "ingress_neo4j_backup" {
-  security_group_id        = "${module.neo4j.sg_id}"
-  type                     = "ingress"
-  protocol                 = "tcp"
-  from_port                = "6362"
-  from_port                = "6362"
-  source_security_group_id = "bastion_sg"
+  client_sg_ids      = ["${data.aws_security_group.kubernetes.id}"]
+  backup_enabled     = true
+  backup_sg_ids      = ["${data.terraform_remote_state.static.jumphost_sg_id}"]
+  r53_domain         = "foo.bar"
 }
 ```
 
 ## Backups
 
-<!-- TODO -->
+When using Neo4j enterprise edition, it's possible to [take (and restore) online backups via the `neo4j-admin`](https://neo4j.com/docs/operations-manual/current/backup/backup-introduction/) tool. Controlling backup access is done by setting the following variables:
+
+* [`backup_sg_ids`]
+* [`backup_enabled`]
+* [`backup_port`]
 
 ## Logging
 
