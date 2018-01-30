@@ -10,6 +10,7 @@ module "core" {
   key_name               = "${var.key_name}"
   subnets                = "${var.subnet_ids}"
   sgs                    = ["${aws_security_group.sg.id}", "${var.security_group_ids}"]
+  ebs_enabled            = false
   user_data              = "${data.template_cloudinit_config.userdata.*.rendered}"
 
   tags = "${merge("${var.tags}",
