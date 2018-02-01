@@ -17,8 +17,8 @@ variable "name" {
 }
 
 variable "ami" {
-  description = "String(optional, \"\"): AMI to be used for the Neo4j nodes"
-  default     = "ami-4d46d534"
+  description = "String(optional, \"ami-1b791862\"): AMI to be used for the Neo4j nodes"
+  default     = "ami-1b791862"
 }
 
 variable "key_name" {
