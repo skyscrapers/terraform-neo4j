@@ -83,7 +83,7 @@ EOF
 aws --region $(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone | sed 's/[a-z]$//') ec2 wait volume-in-use --filters Name=attachment.instance-id,Values=$(curl -s http://169.254.169.254/latest/meta-data/instance-id) Name=attachment.device,Values=/dev/xvdf
 
 # Create FS
-if $(blkid -p /dev/xvdf &>/dev/null); then
+if ! $(blkid -p /dev/xvdf &>/dev/null); then
   mkfs.ext4 /dev/xvdf -L NEO4J
 fi
 
@@ -103,8 +103,8 @@ EOF
 }
 
 data "aws_route53_zone" "domain" {
-  count        = "${var.r53_domain == "" ? 0 : 1}"
-  name         = "${var.environment}.${var.r53_domain}"
+  count = "${var.r53_domain == "" ? 0 : 1}"
+  name  = "${var.environment}.${var.r53_domain}"
 }
 
 resource "aws_route53_record" "core_record" {
