@@ -1,6 +1,6 @@
 data "aws_route53_zone" "domain" {
   count = "${var.r53_domain == "" ? 0 : 1}"
-  name  = "${var.environment}.${var.r53_domain}"
+  name  = "${var.r53_domain}"
 }
 
 resource "aws_route53_record" "core_record" {
