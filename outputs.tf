@@ -13,11 +13,6 @@ output "instances_role_id" {
   value       = "${module.core.role_id}"
 }
 
-output "instances_role_name" {
-  description = "IAM role name used by the EC2 instances"
-  value       = "${module.core.role_name}"
-}
-
 output "instance_public_dns" {
   description = "List: The public DNS name assigned to the instance. For EC2-VPC, this is only available if you've enabled DNS hostnames for your VPC"
   value       = "${module.core.instance_public_dns}"
