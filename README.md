@@ -46,7 +46,7 @@ Terraform module to setup all resources needed for setting up a Neo4j cluster (e
 
 | Name | Description |
 |------|-------------|
-| instance\_ids | List of IDs of the EC2 instances |
+| instance\_ids | List: IDs of the EC2 instances |
 | instance\_private\_dns | List: The private DNS name assigned to the instance. Can only be used inside the Amazon EC2, and only available if you've enabled DNS hostnames for your VPC |
 | instance\_private\_ips | List: The private IP address assigned to the instances |
 | instance\_public\_dns | List: The public DNS name assigned to the instance. For EC2-VPC, this is only available if you've enabled DNS hostnames for your VPC |

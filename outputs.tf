@@ -4,7 +4,7 @@ output "sg_id" {
 }
 
 output "instance_ids" {
-  description = "List of IDs of the EC2 instances"
+  description = "List: IDs of the EC2 instances"
   value       = "${module.core.instance_ids}"
 }
 
