@@ -1,5 +1,5 @@
 module "core" {
-  source                 = "github.com/skyscrapers/terraform-instances//instance?ref=2.0.14"
+  source                 = "github.com/skyscrapers/terraform-instances//instance?ref=2.3.8"
   project                = "${var.project}"
   environment            = "${var.environment}"
   name                   = "${var.name}-core"
@@ -40,7 +40,7 @@ resource "aws_volume_attachment" "core_attach" {
 }
 
 module "puppet_userdata" {
-  source              = "github.com/skyscrapers/terraform-instances//puppet-userdata?ref=2.1.0"
+  source              = "github.com/skyscrapers/terraform-instances//puppet-userdata?ref=2.3.8"
   amount_of_instances = "${var.core_count}"
   customer            = "${var.customer == "" ? var.project : format("%s-%s", var.customer, var.project)}"
   environment         = "${var.environment}"
